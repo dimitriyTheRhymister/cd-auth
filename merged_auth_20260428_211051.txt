@@ -1,0 +1,3226 @@
+================================================================================
+СВОДНЫЙ ФАЙЛ КОДА ПРОЕКТА
+Папка: C:\projects\CheckDev\services\auth
+Создан: 2026-04-28T21:10:51.840752
+================================================================================
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\.gitignore
+----------------------------------------
+*.class
+*.iml
+.iml
+target
+*.jar
+*.war
+*.ear
+hs_err_pid*
+.idea
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\checkstyle.xml
+----------------------------------------
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+        "-//Puppy Crawl//DTD Check Configuration 1.3//EN"
+        "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
+
+<module name="Checker">
+
+    <!--Расширение файла должно быть java, properties, xml-->
+    <property name="fileExtensions" value="java, properties, xml"/>
+
+    <!-- Checks for Size Violations.                    -->
+    <!-- See http://checkstyle.sf.net/config_sizes.html -->
+    <module name="FileLength"/>
+
+    <!-- Checks for Headers                                -->
+    <!-- See http://checkstyle.sf.net/config_header.html   -->
+    <!-- <module name="Header"> -->
+    <!--   <property name="headerFile" value="${checkstyle.header.file}"/> -->
+    <!--   <property name="fileExtensions" value="java"/> -->
+    <!-- </module> -->
+
+    <module name="TreeWalker">
+
+        <!--        <module name="EmptyLineSeparator"> &lt;!&ndash; Java Style Guide: Source file structure &ndash;&gt;-->
+        <!--            <property name="tokens" value="-->
+        <!--            CLASS_DEF, ENUM_DEF, INTERFACE_DEF, CTOR_DEF, STATIC_INIT, INSTANCE_INIT, VARIABLE_DEF, METHOD_DEF"/>-->
+        <!--            <property name="allowNoEmptyLineBetweenFields" value="true"/>-->
+        <!--            <property name="allowMultipleEmptyLines" value="false"/>-->
+        <!--            <property name="allowMultipleEmptyLinesInsideClassMembers" value="false"/>-->
+        <!--        </module>-->
+
+        <!-- Checks for Naming Conventions.                  -->
+        <!-- See http://checkstyle.sf.net/config_naming.html -->
+        <module name="ConstantName"/>
+        <!--<module name="LocalFinalVariableName"/>-->
+        <module name="LocalVariableName"/>
+        <module name="MemberName"/>
+        <module name="MethodName"/>
+        <module name="PackageName">
+            <property name="format" value="^[a-z]+(\.[a-z0-9]*)*$"/>
+        </module>
+        <module name="ParameterName"/>
+        <module name="StaticVariableName"/>
+        <module name="TypeName"/>
+
+        <!-- Checks for Size Violations.                    -->
+        <!-- See http://checkstyle.sf.net/config_sizes.html -->
+        <!--<module name="LineLength"/>-->
+        <module name="MethodLength">
+            <property name="tokens" value="METHOD_DEF"/>
+            <property name="max" value="100"/>
+        </module>
+        <!--        <module name="ParameterNumber"/>-->
+
+        <!-- Checks for whitespace                               -->
+        <!-- See http://checkstyle.sf.net/config_whitespace.html -->
+        <module name="EmptyForIteratorPad"/>
+        <module name="GenericWhitespace"/>
+        <module name="MethodParamPad"/>
+        <module name="NoWhitespaceAfter"/>
+        <module name="NoWhitespaceBefore"/>
+        <module name="OperatorWrap"/>
+        <module name="ParenPad"/>
+        <module name="TypecastParenPad"/>
+        <module name="WhitespaceAfter"/>
+        <!--        <module name="WhitespaceAround"/>-->
+
+        <!-- Modifier Checks                                    -->
+        <!-- See http://checkstyle.sf.net/config_modifiers.html -->
+
+        <!-- Checks for blocks. You know, those {}'s         -->
+        <!-- See http://checkstyle.sf.net/config_blocks.html -->
+        <module name="AvoidNestedBlocks"/>
+        <module name="LeftCurly"/>
+        <!--        <module name="NeedBraces"/>-->
+        <module name="RightCurly"/>
+
+        <!-- Checks for common coding problems               -->
+        <!-- See http://checkstyle.sf.net/config_coding.html -->
+        <!--<module name="AvoidInlineConditionals"/>-->
+        <module name="EmptyStatement"/>
+        <module name="EqualsHashCode"/>
+        <!--<module name="HiddenField"/>-->
+        <module name="IllegalInstantiation"/>
+        <module name="InnerAssignment"/>
+        <!--<module name="MagicNumber"/>-->
+        <module name="MissingSwitchDefault"/>
+        <module name="SimplifyBooleanExpression"/>
+        <module name="SimplifyBooleanReturn"/>
+
+        <!-- Checks for class design                         -->
+        <!-- See http://checkstyle.sf.net/config_design.html -->
+        <!--<module name="DesignForExtension"/>-->
+        <!--<module name="FinalClass"/>-->
+        <!--<module name="HideUtilityClassConstructor"/>-->
+        <module name="InterfaceIsType"/>
+
+        <!-- Miscellaneous other checks.                   -->
+        <!-- See http://checkstyle.sf.net/config_misc.html -->
+        <module name="ArrayTypeStyle"/>
+        <!--<module name="FinalParameters"/>-->
+        <module name="TodoComment"/>
+        <module name="UpperEll"/>
+        <module name="EmptyBlock"/>
+        <module name="EmptyBlock">
+            <property name="tokens" value="LITERAL_CATCH"/>
+        </module>
+
+        <module name="RegexpSinglelineJava">
+            <!-- . matches any character, so we need to
+                 escape it and use \. to match dots. -->
+            <property name="format" value="org\.junit\.Test"/>
+            <property name="ignoreComments" value="true"/>
+        </module>
+
+        <module name="RegexpSinglelineJava">
+            <!-- . matches any character, so we need to
+                 escape it and use \. to match dots. -->
+            <property name="format" value="org\.hamcrest"/>
+            <property name="ignoreComments" value="true"/>
+        </module>
+        <module name="RegexpSinglelineJava">
+            <!-- . matches any character, so we need to
+                 escape it and use \. to match dots. -->
+            <property name="format" value="junit4"/>
+            <property name="ignoreComments" value="true"/>
+        </module>
+    </module>
+
+</module>
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\pom.xml
+----------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ru.checkdev</groupId>
+    <artifactId>auth</artifactId>
+    <version>1.0.0</version>
+
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.11</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security.oauth.boot</groupId>
+            <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+            <version>2.6.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.7.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-lang/commons-lang -->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.11.3</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.6.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>19.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>4.23.1</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sargue</groupId>
+            <artifactId>mailgun</artifactId>
+            <version>1.9.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
+<!--        <dependency>-->
+<!--            <groupId>org.freemarker</groupId>-->
+<!--            <artifactId>freemarker</artifactId>-->
+<!--            <version>2.3.23</version>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.32</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>2021.0.1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <compilerVersion>17</compilerVersion>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.2.0</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>10.3.3</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>validate</id>
+                        <phase>validate</phase>
+                        <configuration>
+                            <configLocation>checkstyle.xml</configLocation>
+                            <consoleOutput>true</consoleOutput>
+                            <failsOnError>true</failsOnError>
+                            <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                        </configuration>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.12</version>
+                <executions>
+                    <execution>
+                        <id>default-prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>check</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <rule>
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>LINE</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.13</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>BRANCH</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.01</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\java\ru\checkdev\auth\AuthSrv.java
+----------------------------------------
+package ru.checkdev.auth;
+
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.ApplicationPidFileWriter;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+@OpenAPIDefinition(info = @Info(title = "Auth - authentication service", description = "Description"))
+@SpringBootApplication
+@EnableEurekaClient
+public class AuthSrv {
+    public static void main(String[] args) {
+        SpringApplication application = new SpringApplication(AuthSrv.class);
+        application.addListeners(new ApplicationPidFileWriter("./auth.pid"));
+        application.run();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\java\ru\checkdev\auth\config\SecurityConfig.java
+----------------------------------------
+package ru.checkdev.auth.config;
+
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+
+@Configuration
+@EnableWebSecurity
+@EnableResourceServer
+@EnableAuthorizationServer
+@AllArgsConstructor
+public class SecurityConfig {
+
+    private UserDetailsService userDetailsService;
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().antMatchers(
+                "/ping",
+                "/registration",
+                "/forgot",
+                "/forgotTg",
+                "/auth/activated/**",
+                "/person/by",
+                "/person/random",
+                "/person/resume/**",
+                "/person/currentForTg/**",
+                "/person/checkPassword",
+                "/person/by/email",
+                "/img",
+                "/person/profile",
+                "/template/queue",
+                "/template/ping",
+                "/profiles/**",
+                "/profiles/tg/notified/**",
+                "/profiles/tg/unnotified/**",
+                "/swagger-ui/**",
+                "/v3/**"
+        );
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(new BCryptPasswordEncoder());
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+        http.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
+        return http.getSharedObject(AuthenticationManagerBuilder.class).build();
+    }
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\java\ru\checkdev\auth\domain\Photo.java
+----------------------------------------
+package ru.checkdev.auth.domain;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+/**
+ * @author Hincu Andrei on 27.05.2018.
+ * @version $Id$.
+ * @since 0.1.
+ */
+@Entity(name = "photos")
+public class Photo {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @JsonIgnore
+    private byte[] photo;
+
+    private String name;
+
+
+    public Photo() {
+    }
+
+    public Photo(int id) {
+        this.id = id;
+    }
+
+    public Photo(byte[] photo, String name) {
+        this.photo = photo;
+        this.name = name;
+    }
+
+    public Photo(int id, byte[] photo, String name) {
+        this.id = id;
+        this.photo = photo;
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\java\ru\checkdev\auth\domain\Profile.java
+----------------------------------------
+package ru.checkdev.auth.domain;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.persistence.*;
+import java.util.Calendar;
+import java.util.List;
+
+/**
+ * @author parsentev
+ * @since 25.09.2016
+ */
+@Entity(name = "profile")
+public class Profile {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    private String username;
+
+    @Column(unique = true)
+    private String email;
+
+    private String key;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
+
+    private boolean active;
+
+    private String experience;
+
+    private boolean show;
+
+    private String salary;
+    @Column(name = "about_short")
+    private String aboutShort;
+
+    private String about;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(referencedColumnName = "id", name = "id_photo")
+    private Photo photo;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "profile_role",
+            joinColumns = {
+                    @JoinColumn(name = "profile_id", nullable = false, updatable = false)
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "role_id", nullable = false, updatable = false)
+            }
+    )
+    private List<Role> roles;
+
+    /**
+     * Privacy sign.
+     */
+    private boolean privacy;
+
+    @Transient
+    private String brief;
+
+    @Transient
+    private String urlHh;
+
+    private String location;
+
+    private Calendar updated;
+
+    private Calendar created;
+
+    public Profile() {
+    }
+
+    public Profile(String username, String email, String password) {
+        this();
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+    public Profile(String username, String experience, String salary, String aboutShort, String about, String location) {
+        this.experience = experience;
+        this.salary = salary;
+        this.aboutShort = aboutShort;
+        this.about = about;
+        this.username = username;
+        this.location = location;
+    }
+
+    public Profile(String key, String experience, String salary, String aboutShort, String username, String location, Object photo) {
+        this.key = key;
+        this.experience = experience;
+        this.salary = salary;
+        this.aboutShort = aboutShort;
+        this.username = username;
+        this.location = location;
+        if (photo != null) {
+            this.photo = new Photo((Integer) photo);
+        }
+    }
+
+    public Profile(int id, String username, String email, String key, String password, boolean active, String experience,
+                   boolean show, String salary, String aboutShort, String about, Photo photo, boolean privacy, String location) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.key = key;
+        this.password = password;
+        this.active = active;
+        this.experience = experience;
+        this.show = show;
+        this.salary = salary;
+        this.aboutShort = aboutShort;
+        this.about = about;
+        this.photo = photo;
+        this.privacy = privacy;
+        this.location = location;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    @JsonIgnore
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public String getSalary() {
+        return salary;
+    }
+
+    public void setSalary(String salary) {
+        this.salary = salary;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean isShow() {
+        return show;
+    }
+
+    public void setShow(boolean show) {
+        this.show = show;
+    }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
+
+    public String getAboutShort() {
+        return aboutShort;
+    }
+
+    public void setAboutShort(String aboutShort) {
+        this.aboutShort = aboutShort;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    public String getUrlHh() {
+        return urlHh;
+    }
+
+    public void setUrlHh(String urlHh) {
+        this.urlHh = urlHh;
+    }
+
+    /**
+     * Return privacy sign.
+     *
+     * @return privacy sign.
+     */
+    public boolean isPrivacy() {
+        return privacy;
+    }
+
+    /**
+     * Set privacy sign.
+     *
+     * @param privacy privacy sign.
+     */
+    public void setPrivacy(boolean privacy) {
+        this.privacy = privacy;
+    }
+
+
+    public Calendar getCreated() {
+        return created;
+    }
+
+    public void setCreated(Calendar created) {
+        this.created = created;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Profile profile = (Profile) o;
+
+        return id == profile.id;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    public Photo getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
+    }
+
+    public Calendar getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Calendar updated) {
+        this.updated = updated;
+    }
+
+    public String getBrief() {
+        return brief;
+    }
+
+    public void setBrief(String brief) {
+        this.brief = brief;
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Password {
+        private int id;
+        private String password;
+        private String newPass;
+
+        public Password(int id, String password, String newPass) {
+            this.id = id;
+            this.password = password;
+            this.newPass = newPass;
+        }
+
+        public Password() {
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        public String getNewPass() {
+            return newPass;
+        }
+
+        public void setNewPass(String newPass) {
+            this.newPass = newPass;
+        }
+    }
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\java\ru\checkdev\auth\domain\Role.java
+----------------------------------------
+package ru.checkdev.auth.domain;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+/**
+ * @author parsentev
+ * @since 25.09.2016
+ */
+@Entity(name = "role")
+public class Role {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String value;
+
+
+    public Role() {
+    }
+
+    public Role(int id) {
+        this.id = id;
+    }
+
+    public Role(String value) {
+        this();
+        this.value = value;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Role role = (Role) o;
+
+        return id == role.id;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\java\ru\checkdev\auth\dto\ProfileDTO.java
+----------------------------------------
+package ru.checkdev.auth.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+import java.util.Calendar;
+
+/**
+ * CheckDev пробное собеседование
+ * DTO модель описывает профиль пользователя.
+ *
+ * @author Dmitry Stepanov
+ * @version 22.09.2023'T'20:01
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class ProfileDTO {
+    @EqualsAndHashCode.Include
+    private Integer id;
+    private String username;
+    private String experience;
+    private Integer photoId;
+    /**
+     * Поле дата обновления профиля.
+     */
+    private Calendar updated;
+    /**
+     * Поле дата создания профиля.
+     */
+    private Calendar created;
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\java\ru\checkdev\auth\dto\ProfileTgDTO.java
+----------------------------------------
+package ru.checkdev.auth.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+/**
+ * CheckDev пробное собеседование
+ * DTO модель ProfileTgDto для отправки данных в телеграм
+ *
+ * @author Dmitry Stepanov
+ * @version 14.11.2023 21:43
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class ProfileTgDTO {
+    @EqualsAndHashCode.Include
+    private Integer id;
+    private String username;
+    private String email;
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\java\ru\checkdev\auth\filter\CorsFilter.java
+----------------------------------------
+package ru.checkdev.auth.filter;
+
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@Component
+@Order(Ordered.HIGHEST_PRECEDENCE)
+public class CorsFilter implements Filter {
+
+    @Override
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+        HttpServletResponse response = (HttpServletResponse) res;
+        HttpServletRequest request = (HttpServletRequest) req;
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            chain.doFilter(req, res);
+        }
+    }
+
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\java\ru\checkdev\auth\repository\PersonRepository.java
+----------------------------------------
+package ru.checkdev.auth.repository;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+import ru.checkdev.auth.domain.Photo;
+import ru.checkdev.auth.domain.Profile;
+import ru.checkdev.auth.dto.ProfileDTO;
+import ru.checkdev.auth.dto.ProfileTgDTO;
+
+import java.util.List;
+
+/**
+ * @author parsentev
+ * @since 25.09.2016
+ */
+public interface PersonRepository extends CrudRepository<Profile, Integer> {
+
+    Profile findByEmail(String email);
+
+    Profile findByEmailAndUsername(String email, String username);
+
+    Profile findByKey(String key);
+
+    List<Profile> findByKeyIn(List<String> key);
+
+    @Modifying
+    @Query("update profile p set p.username = ?1, p.password = ?2, p.experience = ?3, p.about = ?4, p.aboutShort = ?5, p.show = ?6, p.salary=?7,  p.location=?8 where p.email = ?9")
+    int update(String username, String password, String experience, String about, String aboutShort, boolean show, String salary, String location, String email);
+
+    @Modifying
+    @Query("update profile p set p.username = ?1, p.password = ?2, p.experience = ?3, p.about = ?4, p.aboutShort = ?5, p.photo =?6 where p.email = ?7")
+    int updateWithImg(String username, String password, String experience, String about, String aboutShort, Photo photo, String email);
+
+    @Query("select count(p.id) from profile as p")
+    Long total();
+
+    Page findAll(Pageable pageable);
+
+    Page findByEmailContainingOrUsernameContaining(String email, String userName, Pageable pageable);
+
+    @Query("select new ru.checkdev.auth.domain.Profile(p.key, p.experience, p.salary, p.aboutShort, p.username, p.location, p.photo.id) from profile as p left JOIN p.photo where p.show is ?1 order by p.updated desc")
+    List<Profile> findByShow(boolean show, Pageable pageable);
+
+    @Query("select new ru.checkdev.auth.domain.Profile(p.key, p.experience, p.salary, p.aboutShort, p.username, p.location, p.photo.id) from profile as p left JOIN p.photo where p.show is ?1 order by p.updated desc")
+    List<Profile> findByShow(boolean show);
+
+    @Query("select count(p.id) from profile as p where p.show is true")
+    Long showed();
+
+    @Query("select p from profile p left join  p.photo where p.email = :email")
+    Profile findPerson(@Param("email") String email);
+
+    /**
+     * Метод нативным запросом ищет пользователей по ID,
+     * возвращая DTO модель ProfileDTO
+     *
+     * @param id int person id
+     * @return ProfileDTO
+     */
+    @Query("SELECT new ru.checkdev.auth.dto.ProfileDTO(p.id, p.username, p.experience, p.photo.id, p.updated, p.created) FROM profile p WHERE p.id = :id")
+    ProfileDTO findProfileById(@Param("id") int id);
+
+    /**
+     * Метод нативным запросом формирует список всех пользователей,
+     * возвращая список DTO моделей ProfileDTO
+     * сортированных по убыванию даты создания Профиля.
+     *
+     * @return List ProfileDTO
+     */
+    @Query("SELECT new ru.checkdev.auth.dto.ProfileDTO(p.id, p.username, p.experience, p.photo.id, p.updated, p.created) FROM profile p ORDER BY p.created DESC")
+    List<ProfileDTO> findProfileOrderByCreatedDesc();
+
+    /**
+     * Метод ищет пользователей по ID,
+     * возвращая DTO модель ProfileTgDTO для сервиса Notification telegram
+     *
+     * @param id int person id
+     * @return ProfileTgDTO
+     */
+    @Query("SELECT new ru.checkdev.auth.dto.ProfileTgDTO(p.id, p.username, p.email) FROM profile p WHERE p.id = :id")
+    ProfileTgDTO findProfileTgById(@Param("id") int id);
+
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\java\ru\checkdev\auth\repository\PhotoRepository.java
+----------------------------------------
+package ru.checkdev.auth.repository;
+
+import org.springframework.data.repository.CrudRepository;
+import ru.checkdev.auth.domain.Photo;
+
+/**
+ * @author Hincu Andrei (andreih1981@gmail.com)on 28.05.2018.
+ * @version $Id$.
+ * @since 0.1.
+ */
+public interface PhotoRepository extends CrudRepository<Photo, Integer> {
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\java\ru\checkdev\auth\repository\RoleRepository.java
+----------------------------------------
+package ru.checkdev.auth.repository;
+
+import org.springframework.data.repository.CrudRepository;
+import ru.checkdev.auth.domain.Role;
+
+/**
+ * @author parsentev
+ * @since 25.09.2016
+ */
+public interface RoleRepository extends CrudRepository<Role, Integer> {
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\java\ru\checkdev\auth\service\PersonService.java
+----------------------------------------
+package ru.checkdev.auth.service;
+
+import com.google.common.collect.Lists;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.RandomStringUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+import ru.checkdev.auth.domain.Photo;
+import ru.checkdev.auth.domain.Profile;
+import ru.checkdev.auth.domain.Role;
+import ru.checkdev.auth.repository.PersonRepository;
+
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.ImageOutputStream;
+import java.awt.image.BufferedImage;
+import java.beans.PropertyDescriptor;
+import java.io.ByteArrayOutputStream;
+import java.util.*;
+
+/**
+ * @author parsentev
+ * @since 25.09.2016
+ */
+
+@Service
+@AllArgsConstructor
+@Slf4j
+public class PersonService {
+
+    private final PasswordEncoder passwordEncoder;
+    private final PersonRepository persons;
+
+    public Optional<Profile> reg(Profile profile) {
+        Optional<Profile> result = Optional.empty();
+        try {
+            if (profile.isPrivacy()) {
+                profile.setRoles(null);
+                profile.setActive(true);
+                profile.setKey(
+                        passwordEncoder.encode(
+                                String.format("%s%s", System.currentTimeMillis(), profile.getPassword())
+                        )
+                );
+                profile.setPassword(passwordEncoder.encode(profile.getPassword()));
+                profile.setUpdated(Calendar.getInstance());
+                result = Optional.of(persons.save(profile));
+                Map<String, Object> keys = new HashMap<>();
+                keys.put("key", profile.getKey());
+            }
+        } catch (DataIntegrityViolationException e) {
+            log.error("not unique email {}", profile.getEmail());
+        }
+        return result;
+    }
+
+    public Optional<Profile> create(Profile profile) {
+        Optional<Profile> result = Optional.empty();
+        try {
+            profile.setPrivacy(true);
+            profile.setRoles(null);
+            profile.setKey(
+                    passwordEncoder.encode(
+                            String.format("%s%s", System.currentTimeMillis(), profile.getPassword())
+                    )
+            );
+            profile.setPassword(passwordEncoder.encode(profile.getPassword()));
+            result = Optional.of(persons.save(profile));
+        } catch (DataIntegrityViolationException e) {
+            log.error("not unique email {}", profile.getEmail());
+        }
+        return result;
+    }
+
+    public Optional<Profile> findByEmail(String email) {
+        final Optional<Profile> result;
+        Profile profile = persons.findByEmail(email);
+        if (profile == null) {
+            result = Optional.empty();
+        } else {
+            result = Optional.of(profile);
+        }
+        return result;
+    }
+
+    public List<Profile> getAll() {
+        return Lists.newArrayList(persons.findAll());
+    }
+
+    public List<Profile> getIn(List<String> keys) {
+        return this.persons.findByKeyIn(keys);
+    }
+
+    @Transactional
+    public boolean activated(String key) {
+        Profile profile = persons.findByKey(key);
+        boolean result = false;
+        if (profile != null && !profile.isActive()) {
+            profile.setActive(true);
+            persons.save(profile);
+            result = true;
+        }
+        return result;
+    }
+
+    public Optional<Profile> forgot(Profile profile) {
+        final Optional<Profile> result;
+        Profile find = persons.findByEmail(profile.getEmail());
+        if (find == null) {
+            result = Optional.empty();
+        } else {
+            String password = RandomStringUtils.randomAlphabetic(8);
+            find.setPassword(passwordEncoder.encode(password));
+            persons.save(find);
+            Map<String, Object> keys = new HashMap<>();
+            keys.put("password", password);
+            result = Optional.of(profile);
+        }
+        return result;
+    }
+
+    public Optional<Profile> forgotTg(Profile profile) {
+        final Optional<Profile> result;
+        Profile find = persons.findByEmail(profile.getEmail());
+        if (find == null) {
+            result = Optional.empty();
+        } else {
+            String password = profile.getPassword();
+            find.setPassword(passwordEncoder.encode(password));
+            find.setUpdated(Calendar.getInstance());
+            persons.save(find);
+            Map<String, Object> keys = new HashMap<>();
+            keys.put("password", password);
+            result = Optional.of(find);
+        }
+        return result;
+    }
+
+    public List<Profile> findAll(Pageable pageable) {
+        return persons.findAll(pageable).getContent();
+    }
+
+    public Long total() {
+        return persons.total();
+    }
+
+    public Profile findById(int id) {
+        return persons.findById(id).get();
+    }
+
+    public void save(Profile profile) {
+        persons.save(profile);
+    }
+
+    @Transactional
+    public void saveRole(Profile profile) {
+        Profile load = persons.findById(profile.getId()).get();
+        List<Role> roles = new ArrayList<>();
+        for (Role role : profile.getRoles()) {
+            if (role != null) {
+                roles.add(role);
+            }
+        }
+        if (profile.isActive()) {
+            load.setActive(true);
+        }
+        load.setRoles(roles);
+        load.setUpdated(Calendar.getInstance());
+        persons.save(load);
+    }
+
+    public Profile findByKey(String key) {
+        return persons.findByKey(key);
+    }
+
+    public List<Profile> findBySearch(String search, PageRequest email) {
+        return persons.findByEmailContainingOrUsernameContaining(search, search, email).getContent();
+    }
+
+    public List<Profile> findByShow(boolean show, int limit) {
+        return persons.findByShow(show, PageRequest.of(0, limit));
+    }
+
+    public List<Profile> findByShow(boolean show) {
+        return persons.findByShow(show);
+    }
+
+    public List<Profile> findByShow(boolean show, Pageable pageable) {
+        return persons.findByShow(show, pageable);
+    }
+
+    public Long showed() {
+        return persons.showed();
+    }
+
+    public Photo compress(MultipartFile multipartFile) {
+        Photo photo = new Photo();
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
+             ImageOutputStream ios = ImageIO.createImageOutputStream(bos)) {
+            BufferedImage bufferedImage = ImageIO.read(multipartFile.getInputStream());
+
+            Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpg");
+            ImageWriter writer = writers.next();
+            writer.setOutput(ios);
+            ImageWriteParam param = writer.getDefaultWriteParam();
+            param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+            param.setCompressionQuality(0.5f);
+            writer.write(null, new IIOImage(bufferedImage, null, null), param);
+            byte[] bytes = bos.toByteArray();
+            writer.dispose();
+            photo.setPhoto(bytes);
+            photo.setName(multipartFile.getOriginalFilename());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return photo;
+    }
+
+    public Profile loadFromHh(String linc) {
+        Profile profile = null;
+        try {
+            Document doc = Jsoup.connect(linc).validateTLSCertificates(false).get();
+            String name = doc.getElementsByAttributeValue("data-qa", "resume-personal-name").first().text();
+            String address = doc.getElementsByAttributeValue("data-qa", "resume-personal-address").first().text();
+            String experience = doc.getElementsByClass("resume-block__title-text resume-block__title-text_sub").first().text();
+            String salary = doc.getElementsByAttributeValue("data-qa", "resume-block-salary").first().text();
+            String aboutShort = doc.getElementsByAttributeValue("data-qa", "resume-block-title-position").first().text();
+            StringBuilder about = new StringBuilder();
+            String startP = "<p>";
+            String endP = "</p>";
+            Elements elements = doc.getElementsByAttributeValue("itemprop", "worksFor");
+            for (Element element : elements) {
+                String text = element.getElementsByClass("bloko-column bloko-column_s-2 bloko-column_m-2 bloko-column_l-2").first().text();
+                String companyName = element.getElementsByClass("resume-block__sub-title").first().text();
+                String description = element.getElementsByAttributeValue("data-qa", "resume-block-experience-description").first().text();
+                about.append(startP).append(text).append(endP);
+                about.append(startP).append(companyName).append(endP);
+                about.append(startP).append(description).append(endP);
+            }
+            profile = new Profile(name, experience, salary, aboutShort, about.toString(), address);
+            Element img = doc.getElementsByClass("resume-photo__image HH-Bloko-PopupSwitcher-Switcher").first();
+            if (img != null) {
+                String url = img.absUrl("src");
+                profile.setUrlHh(url);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return profile;
+    }
+
+    public String update(String email, MultipartFile file, Profile profile) {
+        String result = "ok";
+        Profile profileDb = persons.findPerson(email);
+        Photo photo;
+        if (file != null && !file.getOriginalFilename().isEmpty()) {
+            if (file.getSize() < 1000000) {
+                photo = compress(file);
+                if (profileDb.getPhoto() == null) {
+                    profileDb.setPhoto(photo);
+                } else {
+                    BeanUtils.copyProperties(photo, profileDb.getPhoto(), "id");
+                }
+            } else {
+                result = "Photo is very big!";
+            }
+        } else if (!StringUtils.isEmpty(profile.getUrlHh())) {
+            try {
+                byte[] bytes = Jsoup.connect(profile.getUrlHh()).validateTLSCertificates(false).ignoreContentType(true).execute().bodyAsBytes();
+                String uuidFile = UUID.randomUUID().toString();
+                photo = new Photo(bytes, uuidFile);
+                if (profileDb.getPhoto() == null) {
+                    profileDb.setPhoto(photo);
+                } else {
+                    BeanUtils.copyProperties(photo, profileDb.getPhoto(), "id");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Не верная ссылка";
+            }
+        }
+        Set<String> nullPropertyNames = getNullPropertyNames(profile, "id", "email", "key", "roles", "privacy", "photo");
+        BeanUtils.copyProperties(profile, profileDb, nullPropertyNames.toArray(new String[0]));
+        profileDb.setUpdated(Calendar.getInstance());
+        profileDb.setActive(true);
+        persons.save(profileDb);
+        return result;
+    }
+
+    private Set<String> getNullPropertyNames(Object source, String... extra) {
+        final BeanWrapper src = new BeanWrapperImpl(source);
+        PropertyDescriptor[] pds = src.getPropertyDescriptors();
+        Set<String> emptyNames = new HashSet<>();
+        for (PropertyDescriptor pd : pds) {
+            Object srcValue = src.getPropertyValue(pd.getName());
+            if (srcValue == null) {
+                emptyNames.add(pd.getName());
+            }
+        }
+        emptyNames.addAll(Arrays.asList(extra));
+        return emptyNames;
+    }
+
+    public void changePassword(Profile profile, String email) {
+        Profile profileDb = persons.findById(profile.getId()).get();
+        if (email.equals(profileDb.getEmail())) {
+            profileDb.setUpdated(Calendar.getInstance());
+            profileDb.setPassword(passwordEncoder.encode(profile.getPassword()));
+            persons.save(profileDb);
+        }
+    }
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\java\ru\checkdev\auth\service\PhotoService.java
+----------------------------------------
+package ru.checkdev.auth.service;
+
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import ru.checkdev.auth.domain.Photo;
+import ru.checkdev.auth.repository.PhotoRepository;
+
+/**
+ * @author Hincu Andrei (andreih1981@gmail.com)on 28.05.2018.
+ * @version $Id$.
+ * @since 0.1.
+ */
+@Service
+@AllArgsConstructor
+public class PhotoService {
+
+    private final PhotoRepository photoRepository;
+
+    public Photo save(Photo photo) {
+        return photoRepository.save(photo);
+    }
+
+    public Photo findImage(Integer id) {
+        return photoRepository.findById(id).get();
+    }
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\java\ru\checkdev\auth\service\ProfileService.java
+----------------------------------------
+package ru.checkdev.auth.service;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import ru.checkdev.auth.domain.Profile;
+import ru.checkdev.auth.dto.ProfileDTO;
+import ru.checkdev.auth.dto.ProfileTgDTO;
+import ru.checkdev.auth.repository.PersonRepository;
+
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * CheckDev пробное собеседование
+ * Класс получения ProfileDTO
+ *
+ * @author Dmitry Stepanov
+ * @version 22.09.2023'T'23:41
+ */
+
+@Service
+@AllArgsConstructor
+@Slf4j
+public class ProfileService {
+    private final PersonRepository personRepository;
+    private final PasswordEncoder encoding;
+
+    /**
+     * Получить ProfileDTO по ID
+     *
+     * @param id int
+     * @return ProfileDTO
+     */
+    public Optional<ProfileDTO> findProfileByID(int id) {
+        return Optional.ofNullable(personRepository.findProfileById(id));
+    }
+
+    /**
+     * Получить ProfileTgDTO по ID
+     *
+     * @param id int
+     * @return ProfileDTO
+     */
+    public Optional<ProfileTgDTO> findProfileTgByID(int id) {
+        return Optional.ofNullable(personRepository.findProfileTgById(id));
+    }
+
+    public Optional<ProfileTgDTO> findProfileTgByEmailAndPassword(String email, String password) {
+        Optional<ProfileTgDTO> result = Optional.empty();
+        Profile profile = personRepository.findByEmail(email);
+        if (profile != null && encoding.matches(password, profile.getPassword())) {
+            result = Optional.of(new ProfileTgDTO(
+                    profile.getId(),
+                    profile.getUsername(),
+                    profile.getEmail()));
+        }
+        return result;
+    }
+
+    /**
+     * Получить список всех PersonDTO
+     *
+     * @return List<PersonDTO>
+     */
+    public List<ProfileDTO> findProfilesOrderByCreatedDesc() {
+        return personRepository.findProfileOrderByCreatedDesc();
+    }
+
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\java\ru\checkdev\auth\service\RoleService.java
+----------------------------------------
+package ru.checkdev.auth.service;
+
+import com.google.common.collect.Lists;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import ru.checkdev.auth.domain.Role;
+import ru.checkdev.auth.repository.RoleRepository;
+
+import java.util.List;
+
+/**
+ * @author parsentev
+ * @since 26.09.2016
+ */
+
+@Service
+@AllArgsConstructor
+public class RoleService {
+
+    private final RoleRepository roles;
+
+    public Role save(Role role) {
+        return this.roles.save(role);
+    }
+
+    public List<Role> findAll() {
+        return Lists.newArrayList(this.roles.findAll());
+    }
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\java\ru\checkdev\auth\util\OAuthCall.java
+----------------------------------------
+package ru.checkdev.auth.util;
+
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+
+import javax.net.ssl.HttpsURLConnection;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.security.Principal;
+import java.util.Map;
+
+/**
+ * @author Petr Arsentev (parsentev@yandex.ru)
+ * @version $Id$
+ * @since 0.1
+ */
+public class OAuthCall {
+    static {
+        HttpsURLConnection.setDefaultHostnameVerifier((hostname, session) -> true);
+    }
+
+    public String doGet(Principal user, String url) throws Exception {
+        return this.call(user, "GET", url, null);
+    }
+
+    public String doPost(Principal user, String url, String data) throws Exception {
+        return this.call(user, "POST", url, data);
+    }
+
+    private String call(Principal user, String method, String url, String data) throws Exception {
+        String access = user != null ? ((Map<String, String>) ((Map<String, Object>) ((OAuth2Authentication) user)
+                .getUserAuthentication().getDetails())
+                .get("details")).get("tokenValue") : null;
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        con.setRequestMethod(method);
+        con.addRequestProperty("User-Agent", "Mozilla/5.0");
+        con.addRequestProperty("Authorization", "Bearer " + access);
+        con.setDoOutput(true);
+        con.setInstanceFollowRedirects(false);
+        con.setRequestProperty("Content-Type", "application/json");
+        con.setRequestProperty("charset", "utf-8");
+        con.setUseCaches(false);
+        if (data != null) {
+            try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
+                wr.write(data.getBytes(StandardCharsets.UTF_8));
+            }
+        }
+        StringBuilder response = new StringBuilder();
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
+            in.lines().forEach(response::append);
+        }
+        return response.toString();
+    }
+}
+
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\java\ru\checkdev\auth\util\PhotoMainClass.java
+----------------------------------------
+package ru.checkdev.auth.util;
+
+import ru.checkdev.auth.domain.Photo;
+
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.ImageOutputStream;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+/**
+ * @author Hincu Andrei (andreih1981@gmail.com)on 14.09.2018.
+ * @version $Id$.
+ * @since 0.1.
+ */
+public class PhotoMainClass {
+
+    public static void compress(Photo photo) {
+
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream(); ImageOutputStream ios = ImageIO.createImageOutputStream(bos)) {
+            ByteArrayInputStream bis = new ByteArrayInputStream(photo.getPhoto());
+            BufferedImage bufferedImage = ImageIO.read(bis);
+
+            Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpg");
+            ImageWriter writer = writers.next();
+            writer.setOutput(ios);
+            ImageWriteParam param = writer.getDefaultWriteParam();
+            param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+            param.setCompressionQuality(0.05f);
+            writer.write(null, new IIOImage(bufferedImage, null, null), param);
+            byte[] bytes = bos.toByteArray();
+            writer.dispose();
+            photo.setPhoto(bytes);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void skip(String[] args) throws Exception {
+        Class.forName("org.postgresql.Driver");
+        Connection connection = null;
+        connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/job4j_auth", "postgres", "password");
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM photos");
+        ResultSet rs = statement.executeQuery();
+        List<Photo> photos = new ArrayList<>();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            byte[] bytes = rs.getBytes("photo");
+            Photo photo = new Photo();
+            photo.setId(id);
+            photo.setPhoto(bytes);
+            photos.add(photo);
+        }
+        statement.close();
+        System.out.println("---------------------------------------------");
+
+        PreparedStatement ps = connection.prepareStatement("UPDATE photos  SET photo = (?) WHERE id= (?)");
+        for (Photo photo : photos) {
+            compress(photo);
+            ps.setBytes(1, photo.getPhoto());
+            ps.setInt(2, photo.getId());
+            ps.execute();
+        }
+        ps.executeBatch();
+
+    }
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\java\ru\checkdev\auth\util\UserDetailsDefinition.java
+----------------------------------------
+package ru.checkdev.auth.util;
+
+import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
+import ru.checkdev.auth.domain.Profile;
+import ru.checkdev.auth.repository.PersonRepository;
+
+import java.util.stream.Collectors;
+
+@Component
+@AllArgsConstructor
+public class UserDetailsDefinition implements UserDetailsService {
+
+    private final PersonRepository persons;
+
+    @Override
+    public UserDetails loadUserByUsername(final String email) throws DisabledException {
+        Profile profile = persons.findByEmail(email);
+        if (profile != null) {
+            if (profile.isActive()) {
+                return new User(email,
+                        profile.getPassword(),
+                        profile.getRoles().stream()
+                                .map(
+                                        role -> new SimpleGrantedAuthority(role.getValue())
+                                ).collect(Collectors.toList())
+                ) {
+                    public String getKey() {
+                        return profile.getKey();
+                    }
+                };
+            } else {
+                throw new DisabledException(String.format("Пользователь с почтой %s не активирован.", email));
+            }
+        } else {
+            throw new UsernameNotFoundException(email);
+        }
+    }
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\java\ru\checkdev\auth\web\controller\AuthController.java
+----------------------------------------
+package ru.checkdev.auth.web.controller;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import ru.checkdev.auth.domain.Profile;
+import ru.checkdev.auth.dto.ProfileTgDTO;
+import ru.checkdev.auth.service.PersonService;
+
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
+import java.util.Optional;
+
+/**
+ * @author parsentev
+ * @since 26.09.2016
+ */
+
+@Tag(name = "AuthController", description = "Authentication REST API")
+@RestController
+public class AuthController {
+    private final PersonService persons;
+    private final String ping = "{}";
+
+    @Autowired
+    public AuthController(final PersonService persons) {
+        this.persons = persons;
+    }
+
+    @RequestMapping("/user")
+    public Principal user(Principal user) {
+        return user;
+    }
+
+    @GetMapping("/ping")
+    public String ping() {
+        return this.ping;
+    }
+
+    @GetMapping("/auth/activated/{key}")
+    public Object activated(@PathVariable String key) {
+        if (this.persons.activated(key)) {
+            return new Object() {
+                public boolean getSuccess() {
+                    return true;
+                }
+            };
+        } else {
+            return new Object() {
+                public String getError() {
+                    return "Notify has already activated";
+                }
+            };
+        }
+    }
+
+    @PostMapping("/registration")
+    public Object registration(@RequestBody Profile profile) {
+        Optional<Profile> result = this.persons.reg(profile);
+        if (result.isPresent()) {
+            return new ProfileTgDTO(result.get().getId(),
+                    result.get().getUsername(),
+                    result.get().getEmail());
+        } else {
+            return new Object() {
+                public String getError() {
+                    return String.format("Пользователь с почтой %s уже существует.", profile.getEmail());
+                }
+            };
+        }
+    }
+
+    @PostMapping("/forgot")
+    public Object forgot(@RequestBody Profile profile) {
+        Optional<Profile> result = this.persons.forgot(profile);
+        if (result.isPresent()) {
+            return new Object() {
+                public String getOk() {
+                    return "ok";
+                }
+            };
+        } else {
+            return new Object() {
+                public String getError() {
+                    return "E-mail не найден.";
+                }
+            };
+        }
+    }
+
+    @PostMapping("/forgotTg")
+    public Object forgotTg(@RequestBody Profile profile) {
+        Optional<Profile> result = this.persons.forgotTg(profile);
+        if (result.isPresent()) {
+            return new Object() {
+                public String getOk() {
+                    return "ok";
+                }
+            };
+        } else {
+            return new Object() {
+                public String getError() {
+                    return "E-mail не найден.";
+                }
+            };
+        }
+    }
+
+
+    @GetMapping("/revoke")
+    @ResponseStatus(HttpStatus.OK)
+    public void logout(HttpServletRequest request) {
+
+    }
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\java\ru\checkdev\auth\web\controller\DownloadController.java
+----------------------------------------
+package ru.checkdev.auth.web.controller;
+
+import lombok.AllArgsConstructor;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import ru.checkdev.auth.domain.Photo;
+import ru.checkdev.auth.service.PhotoService;
+
+import java.io.IOException;
+
+/**
+ * @author Hincu Andrei (andreih1981@gmail.com) by 30.05.18;
+ * @version $Id$
+ * @since 0.1
+ */
+@Controller
+@AllArgsConstructor
+public class DownloadController {
+    final private PhotoService photoService;
+
+    @GetMapping(value = "/img", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<ByteArrayResource> deliveryImage(@RequestParam(value = "id") String id) throws IOException {
+        Photo photo = photoService.findImage(Integer.valueOf(id));
+        if (photo == null) {
+            return ResponseEntity.badRequest().body(new ByteArrayResource(new byte[0]));
+        }
+        ByteArrayResource resource = new ByteArrayResource(photo.getPhoto());
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment;filename=" + photo.getName())
+                .contentType(MediaType.APPLICATION_OCTET_STREAM).contentLength(photo.getPhoto().length)
+                .body(resource);
+    }
+
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\java\ru\checkdev\auth\web\controller\PersonController.java
+----------------------------------------
+package ru.checkdev.auth.web.controller;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import ru.checkdev.auth.domain.Profile;
+import ru.checkdev.auth.service.PersonService;
+import ru.checkdev.auth.service.RoleService;
+
+import javax.servlet.ServletException;
+import java.io.IOException;
+import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+/**
+ * @author parsentev
+ * @since 30.09.2016
+ */
+
+@Tag(name = "PersonController", description = "Person REST API")
+@RestController
+@RequestMapping("/person")
+@AllArgsConstructor
+public class PersonController {
+    private final PasswordEncoder passwordEncoder;
+    private final PersonService persons;
+    private final RoleService roles;
+
+    @GetMapping("/current")
+    public Profile getCurrent(Principal user) {
+        return persons.findByEmail(user.getName()).get();
+    }
+
+    @PostMapping("/hh")
+    public Profile getPersonFromHh(@RequestBody String linc) {
+        return persons.loadFromHh(linc);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/list/{limit}/{page}/{search}")
+    public ResponseEntity<HashMap<String, Object>> getAll(@PathVariable int limit, @PathVariable int page, @PathVariable String search, Principal user) throws ServletException {
+        HashMap<String, Object> data = new HashMap<>();
+        if ("noSearch".equals(search)) {
+            data.put("users", persons.findAll(PageRequest.of(page, limit, Sort.Direction.ASC, "email")));
+        } else {
+            data.put("users", persons.findBySearch(search, PageRequest.of(page, limit, Sort.Direction.ASC, "email")));
+        }
+        data.put("total", persons.total());
+        return new ResponseEntity<>(data, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/{id}")
+    public ResponseEntity<HashMap<String, Object>> get(@PathVariable int id, Principal user) throws ServletException {
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("person", persons.findById(id));
+        data.put("roles", roles.findAll());
+        return new ResponseEntity<>(data, HttpStatus.OK);
+    }
+
+    @GetMapping("/profile")
+    public Profile loadProfile(@RequestParam String key) throws ServletException {
+        return persons.findByKey(key);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("/")
+    public Profile save(@RequestBody Profile profile, Principal user) throws ServletException {
+        persons.saveRole(profile);
+        return profile;
+    }
+
+    @SuppressWarnings("unchecked")
+    @PostMapping("/updateMultipart")
+    public ResponseEntity<String> update(@RequestPart Profile profile, @RequestPart(required = false) MultipartFile file, Principal user) throws ServletException, IOException {
+        String email = ((Map<String, String>) ((OAuth2Authentication) user)
+                .getUserAuthentication().getDetails()).get("username");
+        profile.setEmail(email);
+        return new ResponseEntity<>(persons.update(email, file, profile), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/create")
+    public Object createPerson(@RequestBody Profile profile, Principal user) {
+        Optional<Profile> result = persons.create(profile);
+        return result.<Object>map(per -> new Object() {
+            public Profile getPerson() {
+                return per;
+            }
+        }).orElseGet(() -> new Object() {
+            public String getError() {
+                return String.format("Пользователь с почтой %s уже существует.", profile.getEmail());
+            }
+        });
+    }
+
+    @PutMapping("/changePassword")
+    public void changePassword(@RequestBody Profile profile, Principal user) {
+        String email = ((Map<String, String>) ((OAuth2Authentication) user)
+                .getUserAuthentication().getDetails()).get("username");
+        persons.changePassword(profile, email);
+    }
+
+    @PutMapping("/pass")
+    public ResponseEntity<String> changePass(@RequestBody Profile.Password password) {
+        Profile profileDb = persons.findById(password.getId());
+        String response;
+        if (passwordEncoder.matches(password.getPassword(), profileDb.getPassword())) {
+            profileDb.setPassword(passwordEncoder.encode(password.getNewPass()));
+            persons.save(profileDb);
+            response = "ok";
+        } else {
+            response = "Введите правильный пароль";
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/random")
+    public ResponseEntity<Map<String, Object>> showRandomPerson() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("resume", persons.findByShow(true, 5));
+        map.put("countResume", persons.showed());
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+    @GetMapping("/resume/{limit}/{page}")
+    public ResponseEntity<Map<String, Object>> getResume(@PathVariable int limit, @PathVariable int page) {
+        final int pageToShow = page == 0 ? page : page - 1;
+        Map<String, Object> map = new HashMap<>();
+        map.put("personsShowed", persons.findByShow(true, PageRequest.of(pageToShow, limit)));
+        map.put("getTotal", persons.showed());
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\java\ru\checkdev\auth\web\controller\ProfileController.java
+----------------------------------------
+package ru.checkdev.auth.web.controller;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import ru.checkdev.auth.domain.Profile;
+import ru.checkdev.auth.dto.ProfileDTO;
+import ru.checkdev.auth.dto.ProfileTgDTO;
+import ru.checkdev.auth.service.ProfileService;
+
+import java.util.List;
+
+/**
+ * CheckDev пробное собеседование
+ * ProfileController контроллер отправки и приема DTO модели ProfileDTO
+ *
+ * @author Dmitry Stepanov
+ * @version 22.09.2023T23:49
+ */
+
+@Tag(name = "ProfileController", description = "Profile REST API")
+@RestController
+@RequestMapping("/profiles")
+@AllArgsConstructor
+public class ProfileController {
+    private final ProfileService profileService;
+
+    /**
+     * Обрабатывает get запрос на получение профиля пользователя по запрошенному ID.
+     *
+     * @param id ID ProfileDTO
+     * @return ResponseEntity
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<ProfileDTO> getProfileById(@PathVariable int id) {
+        var profileDTO = profileService.findProfileByID(id);
+        return new ResponseEntity<>(
+                profileDTO.orElse(new ProfileDTO()),
+                profileDTO.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK);
+    }
+
+    /**
+     * Отправляет все профили пользователей
+     *
+     * @return ResponseEntity
+     */
+    @GetMapping("/")
+    public ResponseEntity<List<ProfileDTO>> getAllProfilesOrderByCreateDesc() {
+        var profiles = profileService.findProfilesOrderByCreatedDesc();
+        return new ResponseEntity<>(
+                profiles,
+                profiles.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK);
+    }
+
+    /**
+     * Обрабатывает get запрос на получение профиля пользователя по запрошенному ID.
+     * Для телеграм бота
+     *
+     * @param id ProfileTg ID
+     * @return ResponseEntity<ProfileTgDTO>
+     */
+    @GetMapping("/tg/{id}")
+    public ResponseEntity<ProfileTgDTO> getProfileTgById(@PathVariable int id) {
+        var profileDTO = profileService.findProfileTgByID(id);
+        return new ResponseEntity<>(
+                profileDTO.orElse(new ProfileTgDTO()),
+                profileDTO.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK);
+    }
+
+    @PostMapping("/tg/byEmailAndPassword")
+    public ResponseEntity<ProfileTgDTO> getProfileTgByEmailAndPassword(@RequestBody Profile profile) {
+        var profileDTO = profileService.findProfileTgByEmailAndPassword(profile.getEmail(), profile.getPassword());
+        return new ResponseEntity<>(
+                profileDTO.orElse(new ProfileTgDTO()),
+                profileDTO.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK);
+    }
+
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\resources\application.properties
+----------------------------------------
+# Local server (auth)
+server.port=9900
+server.contextPath=/
+# Logging
+logging.level.org.springframework=ERROR
+logging.level.org.hibernate=ERROR
+logging.level.org.apache=ERROR
+logging.level.ru.checkdev=DEBUG
+logging.level.io.undertow=ERROR
+logging.level.l=ERROR
+logging.level.liquibase.executor=ERROR
+logging.file.name=logs/auth.log
+# Security
+security.oauth2.resource.userInfoUri=http://localhost:9000/user
+security.oauth2.client.client-id=job4j
+security.oauth2.client.client-secret=password
+# Datasource
+spring.datasource.url=jdbc:postgresql://127.0.0.1:5432/cd_auth
+spring.datasource.username=postgres
+spring.datasource.password=password
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+# Liquibase
+spring.liquibase.change-log=classpath:db/db.changelog-master.xml
+logging.level.liquibase=error
+# Other
+spring.main.banner-mode=off
+spring.jmx.enabled=false
+spring.servlet.multipart.max-file-size=5MB
+spring.servlet.multipart.max-request-size=5MB
+### Number of ms to wait before throwing an exception if no connection is available.
+spring.datasource.tomcat.max-wait=5000
+### Maximum number of active connections that can be allocated from this pool at the same time.
+spring.datasource.tomcat.max-active=50
+### Validate the connection before borrowing it from the pool.
+spring.datasource.tomcat.test-on-borrow=true
+
+#Eureka
+spring.application.name = auth
+eureka.client.fetch-registry = false
+eureka.client.register-with-eureka = true
+eureka.client.service-url.defaultZone = http://localhost:9009/eureka
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\resources\db\changelog\01-create.xml
+----------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <property name="now" value="now()" dbms="postgresql"/>
+    <changeSet id="01" author="Arsentev">
+
+        <createTable tableName="person">
+            <column autoIncrement="true" name="id" type="int">
+                <constraints unique="true" nullable="false" primaryKey="true"/>
+            </column>
+            <column name="username" type="varchar(2000)"/>
+            <column name="email" type="varchar(2000)">
+                <constraints unique="true"/>
+            </column>
+            <column name="password" type="varchar(2000)"/>
+            <column name="key" type="varchar(2000)"/>
+            <column name="active" type="boolean" defaultValueBoolean="false"/>
+        </createTable>
+
+        <createTable tableName="role">
+            <column autoIncrement="true" name="id" type="int">
+                <constraints unique="true" nullable="false" primaryKey="true"/>
+            </column>
+            <column name="value" type="varchar(200)"/>
+        </createTable>
+
+        <createTable tableName="person_role">
+            <column autoIncrement="true" name="id" type="int">
+                <constraints unique="true" nullable="false" primaryKey="true"/>
+            </column>
+            <column name="person_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_person_role_person" references="person(id)"/>
+            </column>
+            <column name="role_id" type="int">
+                <constraints nullable="false" foreignKeyName="person_role_role" references="role(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\resources\db\changelog\010_ddl_person_add_column_created.xml
+----------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <property name="now" value="now()" dbms="postgresql"/>
+    <changeSet id="010" author="Dima Stepanov">
+        <addColumn schemaName="public"
+                   tableName="person">
+            <column name="created" defaultValueComputed="CURRENT_TIMESTAMP" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\resources\db\changelog\011_dml_person_insert.xml
+----------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="11" author="Arcady555">
+        <insert tableName="person">
+            <column name="username" value="junior"/>
+            <column name="email" value="junior@checkdev.ru"/>
+            <column name="password" value="$2a$10$4bi7xA4O3G2Aj0fZFE2TC.3M0oeaHuP2d3podAVKCiWmbGG/xLYlK"/>
+            <column name="active" value="true"/>
+        </insert>
+        <insert tableName="person">
+            <column name="username" value="middle"/>
+            <column name="email" value="middle@checkdev.ru"/>
+            <column name="password" value="$2a$10$iDo6ctGb0lXdJZcy7ADhdeSGJgDMu8ZavhH18Kqf6L9qT.8Lu1ljq"/>
+            <column name="active" value="true"/>
+        </insert>
+        <insert tableName="person">
+            <column name="username" value="senior"/>
+            <column name="email" value="senior@checkdev.ru"/>
+            <column name="password" value="$2a$10$eOII9/cMpuvdzh.nAOOaSusN/VgmcfgZWEMFdGo.AL2Oj/MVR1M6C"/>
+            <column name="active" value="true"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\resources\db\changelog\012_ddl_alter_person_table_to_name_profile.xml
+----------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <property name="now" value="now()" dbms="postgresql"/>
+    <changeSet id="012" author="Novoselov">
+        <renameTable
+                newTableName="profile"
+                oldTableName="person"
+                schemaName="public"/>
+        <renameTable
+                newTableName="profile_role"
+                oldTableName="person_role"
+                schemaName="public"/>
+        <renameColumn tableName="profile_role"
+                      oldColumnName="person_id"
+                      newColumnName="profile_id"/>
+    </changeSet>
+</databaseChangeLog>
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\resources\db\changelog\013_dml_table_profile_add_column_notified.xml
+----------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <property name="now" value="now()" dbms="postgresql"/>
+    <changeSet id="13" author="Arcady555">
+        <addColumn schemaName="public"
+                   tableName="profile">
+            <column name="notification" type="boolean" defaultValueBoolean="false"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\resources\db\changelog\014_ddl_drop_tables_orders_setting_template.xml
+----------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <property name="now" value="now()" dbms="postgresql"/>
+    <changeSet id="014" author="Andrey Boyko">
+        <dropTable tableName="orders"/>
+        <dropTable tableName="setting"/>
+        <dropTable tableName="template"/>
+    </changeSet>
+</databaseChangeLog>
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\resources\db\changelog\015_ddl_profile_drop_column_notification.xml
+----------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="015" author="Sergei Zakharenko">
+        <dropColumn schemaName="public"
+                    tableName="profile"
+                    columnName="notification"/>
+    </changeSet>
+</databaseChangeLog>
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\resources\db\changelog\02-update.xml
+----------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <property name="now" value="now()" dbms="postgresql"/>
+    <changeSet id="02" author="Arsentev">
+
+        <addColumn schemaName="public"
+                   tableName="person">
+            <column name="privacy" type="boolean" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+        <createTable tableName="orders">
+            <column autoIncrement="true" name="id" type="int">
+                <constraints unique="true" nullable="false" primaryKey="true"/>
+            </column>
+            <column name="user_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(2000)"/>
+            <column name="username" type="varchar(2000)"/>
+            <column name="msg" type="text"/>
+            <column name="created" type="timestamp" valueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="archive" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addColumn schemaName="public"
+                   tableName="person">
+            <column name="experience" type="int"/>
+        </addColumn>
+        <addColumn schemaName="public"
+                   tableName="person">
+            <column name="about_short" type="text"/>
+        </addColumn>
+        <addColumn schemaName="public"
+                   tableName="person">
+            <column name="about" type="text"/>
+        </addColumn>
+
+        <createTable tableName="photos">
+            <column autoIncrement="true" name="id" type="int">
+                <constraints unique="true" nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(50)"/>
+            <column name="photo" type="bytea"/>
+        </createTable>
+
+        <addColumn schemaName="public"
+                   tableName="person">
+            <column name="id_photo" type="int">
+                <constraints nullable="true" foreignKeyName="fk_photo_person" references="photos(id)"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="02" author="Hincu">
+        <addColumn schemaName="public"
+                   tableName="person">
+            <column name="show" type="boolean" defaultValueBoolean="false"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="03" author="Hincu">
+        <addColumn schemaName="public"
+                   tableName="person">
+            <column name="salary" type="varchar(20)"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\resources\db\changelog\03-update.xml
+----------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <property name="now" value="now()" dbms="postgresql"/>
+    <changeSet id="03" author="Hincu">
+        <modifyDataType tableName="person"
+                        columnName="about"
+                        newDataType="text"
+                        schemaName="public"/>
+
+    </changeSet>
+</databaseChangeLog>
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\resources\db\changelog\04-update.xml
+----------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <property name="now" value="now()" dbms="postgresql"/>
+    <changeSet id="04" author="Hincu">
+        <modifyDataType tableName="photos"
+                        columnName="name"
+                        newDataType="varchar(1000)"
+                        schemaName="public"/>
+
+    </changeSet>
+</databaseChangeLog>
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\resources\db\changelog\05-update.xml
+----------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <property name="now" value="now()" dbms="postgresql"/>
+    <changeSet id="05" author="Hincu">
+
+        <addColumn schemaName="public"
+                   tableName="person">
+            <column name="location" type="varchar(2000)"/>
+        </addColumn>
+
+    </changeSet>
+</databaseChangeLog>
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\resources\db\changelog\06-update.xml
+----------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <property name="now" value="now()" dbms="postgresql"/>
+    <changeSet id="06" author="Hincu">
+        <modifyDataType tableName="person"
+                        columnName="experience"
+                        newDataType="varchar(2000)"
+                        schemaName="public"/>
+
+
+    </changeSet>
+</databaseChangeLog>
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\resources\db\changelog\07-update.xml
+----------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <property name="now" value="now()" dbms="postgresql"/>
+    <changeSet id="07" author="Petr Arsentev">
+        <addColumn schemaName="public"
+                   tableName="person">
+            <column name="updated" defaultValueComputed="CURRENT_TIMESTAMP" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\resources\db\changelog\08-create.xml
+----------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <property name="now" value="now()" dbms="postgresql"/>
+    <changeSet id="08" author="Max Ivanov">
+
+        <createTable tableName="template">
+            <column autoIncrement="true" name="id" type="int">
+                <constraints unique="true" nullable="false" primaryKey="true"/>
+            </column>
+            <column name="subject" type="varchar(2000)"/>
+            <column name="body" type="text"/>
+            <column name="type" type="varchar(2000)"/>
+        </createTable>
+        <createTable tableName="setting">
+            <column autoIncrement="true" name="id" type="int">
+                <constraints unique="true" nullable="false" primaryKey="true"/>
+            </column>
+            <column name="template" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="value" type="varchar(2000)"/>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\resources\db\changelog\09_dml_person_insert.xml
+----------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="09" author="Arsentev Petr">
+        <insert tableName="person">
+            <column name="username" value="root"/>
+            <column name="email" value="root@checkdev.ru"/>
+            <column name="password" value="$2a$12$zD8AMBCfUJrWI0AiY.pwuenlyDscXa/AlC58NlRmUdvkdtrPYWaFS"/>
+            <column name="active" value="true"/>
+        </insert>
+
+        <insert tableName="role">
+            <column name="value" value="ROLE_ADMIN"/>
+        </insert>
+
+        <insert tableName="person_role">
+            <column name="person_id" value="1"/>
+            <column name="role_id" value="1"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\main\resources\db\db.changelog-master.xml
+----------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <include file="changelog/01-create.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/02-update.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/03-update.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/04-update.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/05-update.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/06-update.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/07-update.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/08-create.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/09_dml_person_insert.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/010_ddl_person_add_column_created.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/011_dml_person_insert.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/012_ddl_alter_person_table_to_name_profile.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/013_dml_table_profile_add_column_notified.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/014_ddl_drop_tables_orders_setting_template.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/015_ddl_profile_drop_column_notification.xml" relativeToChangelogFile="true"/>
+</databaseChangeLog>
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\test\java\ru\checkdev\auth\repository\PersonRepositoryTest.java
+----------------------------------------
+package ru.checkdev.auth.repository;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import ru.checkdev.auth.dto.ProfileDTO;
+
+import java.util.Collections;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+/**
+ * CheckDev пробное собеседование
+ * Тест на класс PersonRepository
+ *
+ * @author Dmitry Stepanov
+ * @version 22.09.2023'T'21:14
+ */
+@DataJpaTest()
+public class PersonRepositoryTest {
+    @Autowired
+    private TestEntityManager entityManager;
+    @Autowired
+    private PersonRepository personRepository;
+
+    @BeforeEach
+    public void clearTable() {
+        entityManager.getEntityManager().createQuery("delete from profile").executeUpdate();
+    }
+
+    @Test
+    public void injectedComponentAreNotNull() {
+        assertNotNull(entityManager);
+        assertNotNull(personRepository);
+    }
+
+    @Test
+    public void whenFindProfileByIdThenReturnNull() {
+        ProfileDTO profileDTO = personRepository.findProfileById(-1);
+        assertNull(profileDTO);
+    }
+
+    @Test
+    public void whenFindProfileOrderByCreatedDescThenReturnEmptyList() {
+        var listProfileDTO = personRepository.findProfileOrderByCreatedDesc();
+        assertThat(listProfileDTO).isEqualTo(Collections.emptyList());
+    }
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\test\java\ru\checkdev\auth\service\PersonServiceTest.java
+----------------------------------------
+package ru.checkdev.auth.service;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
+import ru.checkdev.auth.domain.Profile;
+import ru.checkdev.auth.repository.PersonRepository;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
+
+/**
+ * @author parsentev
+ * @since 21.09.2016
+ */
+
+@SpringBootTest
+public class PersonServiceTest {
+    @InjectMocks
+    private PersonService service;
+
+    @Mock
+    private PersonRepository persons;
+
+    @AfterEach
+    @Test
+    public void whenRegDuplicatePersonThenResultEmpty() {
+        Profile profile = new Profile("Петр Арсентьев", "parsentev@yandex.ru", "password");
+        this.service.reg(profile);
+        Optional<Profile> result = this.service.reg(profile);
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    public void whenRegPersonRolesThenDropRoles() {
+        Profile profile = new Profile("Петр Арсентьев", "parsentev@yandex.ru", "password");
+        profile.setKey("test");
+        this.persons.save(profile);
+    }
+
+    @Test
+    public void whenSelectAllPersonsThenListContainTestRecord() {
+        when(persons.findAll()).thenReturn(List.of(new Profile()));
+        List<Profile> profileList = this.service.getAll();
+        assertFalse(profileList.isEmpty());
+    }
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\test\java\ru\checkdev\auth\service\PhotoServiceTest.java
+----------------------------------------
+package ru.checkdev.auth.service;
+
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
+import ru.checkdev.auth.domain.Photo;
+import ru.checkdev.auth.repository.PhotoRepository;
+
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
+
+@SpringBootTest
+public class PhotoServiceTest {
+    @Mock
+    private PhotoRepository photoRepository;
+    @InjectMocks
+    private PhotoService photoService;
+
+    private static final Photo PHOTO_FOR_SAVE = new Photo(new byte[]{1, 2, 3}, "some photo");
+    private static final Photo PHOTO_IN_DB = new Photo(1, new byte[]{1, 2, 3}, "some photo");
+
+    @Test
+    void whenSavePhotoThenReturnPhotoWithId() {
+        when(photoRepository.save(PHOTO_FOR_SAVE)).thenReturn(PHOTO_IN_DB);
+        assertEquals(PHOTO_IN_DB, photoService.save(PHOTO_FOR_SAVE));
+    }
+
+    @Test
+    void whenFindPhotoById() {
+        when(photoRepository.findById(1)).thenReturn(Optional.of(PHOTO_IN_DB));
+        assertEquals(PHOTO_IN_DB, photoService.findImage(1));
+    }
+
+    @Test
+    void whenNotFindPhotoById() {
+        when(photoRepository.findById(10)).thenReturn(Optional.empty());
+        assertThrows(NoSuchElementException.class, () -> photoService.findImage(10));
+    }
+
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\test\java\ru\checkdev\auth\service\ProfileServiceTest.java
+----------------------------------------
+package ru.checkdev.auth.service;
+
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
+import ru.checkdev.auth.dto.ProfileDTO;
+import ru.checkdev.auth.repository.PersonRepository;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.when;
+
+/**
+ * CheckDev пробное собеседование
+ * ProfileServiceTest тестирование слоя бизнес логики обработки модели ProfileDTO
+ *
+ * @author Dmitry Stepanov
+ * @version 01:11
+ */
+
+@SpringBootTest
+public class ProfileServiceTest {
+    private static final int ID_OK = 1;
+    @Mock
+    private PersonRepository personRepository;
+
+    @InjectMocks
+    private ProfileService profileService;
+
+    private final ProfileDTO profileDTO1 = new ProfileDTO(
+            1, "name1", "experience1", 1, null, null);
+    private final ProfileDTO profileDTO2 = new ProfileDTO(
+            2, "name2", "experience2", 2, null, null);
+
+    @Test
+    public void whenFindByIDThenReturnOptionalProfileDTO() {
+        when(personRepository.findProfileById(ID_OK)).thenReturn(profileDTO1);
+        var actual = profileService.findProfileByID(ID_OK);
+        assertThat(actual.get()).usingRecursiveComparison().isEqualTo(profileDTO1);
+    }
+
+    @Test
+    public void whenFindByIDThenReturnEmpty() {
+        when(personRepository.findProfileById(anyInt())).thenReturn(null);
+        var actual = profileService.findProfileByID(anyInt());
+        assertThat(actual).usingRecursiveComparison().isEqualTo(Optional.empty());
+    }
+
+    @Test
+    public void whenFindProfilesOrderByCreatedDescThenReturnEmptyList() {
+        when(personRepository.findProfileOrderByCreatedDesc()).thenReturn(Collections.emptyList());
+        var actual = profileService.findProfilesOrderByCreatedDesc();
+        assertThat(actual).usingRecursiveComparison().isEqualTo(Collections.emptyList());
+
+    }
+
+    @Test
+    public void whenFindProfilesOrderByCreatedDescThenReturnListProfileDTO() {
+        var expected = List.of(profileDTO1, profileDTO2);
+        when(personRepository.findProfileOrderByCreatedDesc()).thenReturn(expected);
+        var actual = profileService.findProfilesOrderByCreatedDesc();
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    }
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\test\java\ru\checkdev\auth\service\RoleServiceTest.java
+----------------------------------------
+package ru.checkdev.auth.service;
+
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
+import ru.checkdev.auth.domain.Role;
+import ru.checkdev.auth.repository.RoleRepository;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
+
+/**
+ * @author parsentev
+ * @since 21.09.2016
+ */
+@SpringBootTest
+public class RoleServiceTest {
+    @InjectMocks
+    private RoleService service;
+    @Mock
+    private RoleRepository roles;
+
+    @Test
+    public void whenAddRolesThenPersonHasRoles() {
+        Role role = new Role("ROLE_ADMIN");
+        when(roles.save(any(Role.class))).thenReturn(role);
+        Role result = this.service.save(new Role("ROLE_ADMIN"));
+        assertThat(role).usingRecursiveComparison().isEqualTo(result);
+    }
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\test\java\ru\checkdev\auth\web\controller\ProfileControllerTest.java
+----------------------------------------
+package ru.checkdev.auth.web.controller;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
+import ru.checkdev.auth.AuthSrv;
+import ru.checkdev.auth.dto.ProfileDTO;
+import ru.checkdev.auth.service.ProfileService;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+/**
+ * CheckDev пробное собеседование
+ * ProfileControllerTest тестирование RestController для отправки модели ProfileDTO.
+ *
+ * @author Dmitry Stepanov
+ * @version 01:45
+ */
+@SpringBootTest(classes = AuthSrv.class)
+@ExtendWith(SpringExtension.class)
+@AutoConfigureMockMvc
+public class ProfileControllerTest {
+    @MockBean
+    private ProfileService profileService;
+    @Autowired
+    private MockMvc mockMvc;
+
+    private final ProfileDTO profileDTO1 = new ProfileDTO(
+            1, "name1", "experience1", 1, null, null);
+    private final ProfileDTO profileDTO2 = new ProfileDTO(
+            2, "name2", "experience2", 2, null, null);
+
+    @Test
+    @WithMockUser
+    public void whenGetProfileByIdThenReturnStatusOK() throws Exception {
+        when(profileService.findProfileByID(profileDTO1.getId())).thenReturn(Optional.of(profileDTO1));
+        mockMvc.perform(get("/profiles/{id}", profileDTO1.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(profileDTO1.getId()))
+                .andExpect(jsonPath("$.username").value(profileDTO1.getUsername()))
+                .andExpect(jsonPath("$.experience").value(profileDTO1.getExperience()))
+                .andExpect(jsonPath("$.photoId").value(profileDTO1.getPhotoId()))
+                .andDo(print());
+    }
+
+    @Test
+    @WithMockUser
+    public void whenGetProfileByIdProfileNotFoundThenReturnStatusNotFound() throws Exception {
+        when(profileService.findProfileByID(profileDTO1.getId())).thenReturn(Optional.empty());
+        mockMvc.perform(get("/profiles/{id}/", anyInt())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent())
+                .andDo(print());
+    }
+
+    @Test
+    @WithMockUser
+    public void whenGetAllProfilesOrderByCreateDescThenReturnStatusOkAndBody() throws Exception {
+        var profiles = List.of(profileDTO1, profileDTO2);
+        when(profileService.findProfilesOrderByCreatedDesc()).thenReturn(profiles);
+        mockMvc.perform(get("/profiles/")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()").value(profiles.size()))
+                .andDo(print());
+    }
+
+    @Test
+    @WithMockUser
+    public void whenGetAllProfilesOrderByCreateDescListEmptyThenReturnStatusNoContent() throws Exception {
+        when(profileService.findProfilesOrderByCreatedDesc()).thenReturn(Collections.emptyList());
+        mockMvc.perform(get("/profiles/")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent())
+                .andDo(print());
+    }
+}
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\test\resources\application.properties
+----------------------------------------
+spring.liquibase.change-log=classpath:db/db.changelog-master.xml
+================================================================================
+
+
+================================================================================
+Файл: C:\projects\CheckDev\services\auth\.\src\test\resources\logback-test.xml
+----------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <logger name="at.compax.bbsng.app" level="error"/>
+    <logger name="org.springframework " level="error"/>
+    <logger name="org.hibernate" level="error"/>
+</configuration>
+================================================================================
+
+
+================================================================================
+СТАТИСТИКА СБОРА
+================================================================================
+Обработано текстовых файлов: 50
+Пропущено бинарных файлов: 0
+Всего найдено файлов: 50
+================================================================================
