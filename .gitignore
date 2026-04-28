@@ -1,9 +1,21 @@
+# Maven
+target/
 *.class
-*.iml
-.iml
-target
 *.jar
 *.war
 *.ear
-hs_err_pid*
-.idea
+
+# Logs
+*.log
+*.pid
+
+# IDE
+.idea/
+*.iml
+.settings/
+.classpath
+.project
+
+# OS
+.DS_Store
+Thumbs.db
