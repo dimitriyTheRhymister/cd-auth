@@ -20,7 +20,8 @@ public class Profile {
     private int id;
 
     private String username;
-
+    private String firstName;   // ← НОВОЕ ПОЛЕ
+    private String lastName;    // ← НОВОЕ ПОЛЕ
     @Column(unique = true)
     private String email;
 
@@ -300,6 +301,22 @@ public class Profile {
 
     public void setBrief(String brief) {
         this.brief = brief;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)

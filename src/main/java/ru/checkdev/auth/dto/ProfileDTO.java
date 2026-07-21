@@ -22,6 +22,8 @@ public class ProfileDTO {
     @EqualsAndHashCode.Include
     private Integer id;
     private String username;
+    private String firstName;
+    private String lastName;
     private String experience;
     private Integer photoId;
     /**
@@ -32,4 +34,20 @@ public class ProfileDTO {
      * Поле дата создания профиля.
      */
     private Calendar created;
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 }

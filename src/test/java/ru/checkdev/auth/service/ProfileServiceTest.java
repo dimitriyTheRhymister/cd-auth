@@ -33,9 +33,9 @@ public class ProfileServiceTest {
     private ProfileService profileService;
 
     private final ProfileDTO profileDTO1 = new ProfileDTO(
-            1, "name1", "experience1", 1, null, null);
+            1, "name1", "firstName1", "lastName1", "experience1", 1, null, null);
     private final ProfileDTO profileDTO2 = new ProfileDTO(
-            2, "name2", "experience2", 2, null, null);
+            2, "name2", "firstName2", "lastName2", "experience2", 2, null, null);
 
     @Test
     public void whenFindByIDThenReturnOptionalProfileDTO() {
