@@ -7,25 +7,23 @@ import org.springframework.web.bind.annotation.*;
 import ru.checkdev.auth.domain.Profile;
 import ru.checkdev.auth.dto.ProfileTgDTO;
 import ru.checkdev.auth.service.PersonService;
+import ru.checkdev.auth.util.CircuitBreaker;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.Optional;
 
-/**
- * @author parsentev
- * @since 26.09.2016
- */
-
 @Tag(name = "AuthController", description = "Authentication REST API")
 @RestController
 public class AuthController {
     private final PersonService persons;
+    private final CircuitBreaker circuitBreaker;
     private final String ping = "{}";
 
     @Autowired
-    public AuthController(final PersonService persons) {
+    public AuthController(final PersonService persons, CircuitBreaker circuitBreaker) {
         this.persons = persons;
+        this.circuitBreaker = circuitBreaker;
     }
 
     @RequestMapping("/user")
@@ -40,7 +38,11 @@ public class AuthController {
 
     @GetMapping("/auth/activated/{key}")
     public Object activated(@PathVariable String key) {
-        if (this.persons.activated(key)) {
+        Boolean success = circuitBreaker.exec(
+                () -> persons.activated(key),
+                false // значение по умолчанию
+        );
+        if (success) {
             return new Object() {
                 public boolean getSuccess() {
                     return true;
@@ -57,7 +59,10 @@ public class AuthController {
 
     @PostMapping("/registration")
     public Object registration(@RequestBody Profile profile) {
-        Optional<Profile> result = this.persons.reg(profile);
+        Optional<Profile> result = circuitBreaker.exec(
+                () -> persons.reg(profile),
+                Optional.empty()
+        );
         if (result.isPresent()) {
             return new ProfileTgDTO(result.get().getId(),
                     result.get().getUsername(),
@@ -73,7 +78,10 @@ public class AuthController {
 
     @PostMapping("/forgot")
     public Object forgot(@RequestBody Profile profile) {
-        Optional<Profile> result = this.persons.forgot(profile);
+        Optional<Profile> result = circuitBreaker.exec(
+                () -> persons.forgot(profile),
+                Optional.empty()
+        );
         if (result.isPresent()) {
             return new Object() {
                 public String getOk() {
@@ -91,7 +99,10 @@ public class AuthController {
 
     @PostMapping("/forgotTg")
     public Object forgotTg(@RequestBody Profile profile) {
-        Optional<Profile> result = this.persons.forgotTg(profile);
+        Optional<Profile> result = circuitBreaker.exec(
+                () -> persons.forgotTg(profile),
+                Optional.empty()
+        );
         if (result.isPresent()) {
             return new Object() {
                 public String getOk() {
@@ -107,10 +118,16 @@ public class AuthController {
         }
     }
 
-
     @GetMapping("/revoke")
     @ResponseStatus(HttpStatus.OK)
     public void logout(HttpServletRequest request) {
 
+    }
+
+    @GetMapping("/test/error")
+    public String testError() {
+        return circuitBreaker.exec(() -> {
+            throw new RuntimeException("Тестовая ошибка");
+        }, "fallback");
     }
 }

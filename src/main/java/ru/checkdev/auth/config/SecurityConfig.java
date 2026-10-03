@@ -32,6 +32,7 @@ public class SecurityConfig {
                 "/forgot",
                 "/forgotTg",
                 "/auth/activated/**",
+                "/test/**",  // <--- ДОБАВЬТЕ ЭТУ СТРОКУ
                 "/person/by",
                 "/person/random",
                 "/person/resume/**",
