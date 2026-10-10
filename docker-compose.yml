@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:16
+    container_name: cd-auth-db
+    environment:
+      - POSTGRES_DB=cd_auth
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: always
+
+  auth:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cd-auth
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/cd_auth
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - EUREKA_CLIENT_ENABLED=false
+      - EUREKA_CLIENT_REGISTER_WITH_EUREKA=false
+      - EUREKA_CLIENT_FETCH_REGISTRY=false
+    ports:
+      - "9900:9900"
+      - "9901:9901"
+    depends_on:
+      - db
+    restart: always

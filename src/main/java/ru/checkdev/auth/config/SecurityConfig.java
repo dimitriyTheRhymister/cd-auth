@@ -46,7 +46,8 @@ public class SecurityConfig {
                 "/profiles/tg/notified/**",
                 "/profiles/tg/unnotified/**",
                 "/swagger-ui/**",
-                "/v3/**"
+                "/v3/**",
+            "/actuator/**"
         );
     }
 
