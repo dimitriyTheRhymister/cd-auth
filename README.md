@@ -104,3 +104,86 @@ bind mount (см. docker-compose.yml), поэтому данные не теря
 - SPRING_DATASOURCE_USERNAME — пользователь БД
 - SPRING_DATASOURCE_PASSWORD — пароль БД
 - EUREKA_CLIENT_* — отключение Eureka для локального запуска
+
+## ☸️ Запуск в Kubernetes (minikube)
+
+### Требования
+- Docker
+- [minikube](https://minikube.sigs.k8s.io/docs/start/)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/)
+
+### Запуск
+
+1. Запустить локальный кластер:
+
+   ```bash
+   minikube start --driver=docker
+
+2. Загрузить образ приложения в кластер minikube:
+
+   minikube image load cd-auth-auth:latest
+
+3. Применить манифесты из папки k8s/ в правильном порядке:
+
+   cd k8s
+   kubectl apply -f postgresdb-secret.yml
+   kubectl apply -f postgresdb-configmap.yml
+   kubectl apply -f postgresdb-deployment.yml
+   kubectl apply -f cd-auth-deployment.yml
+
+4. Проверить, что pod-ы запустились:
+
+   kubectl get pods
+
+   Ожидаемо: 2 pod-а в статусе Running (cd-auth и postgresdb-deployment).
+
+5. Получить URL для доступа к приложению:
+
+   minikube service cd-auth-service --url
+
+   Выведет два URL:
+   - первый — REST API (порт 9900)
+   - второй — Management (порт 9901)
+
+6. Проверить health-check (используй второй URL + путь /actuator/health):
+
+   http://IP:PORT/actuator/health
+
+   Ожидаемый ответ:
+
+   {"status":"UP","components":{"db":{"status":"UP"},...}}
+
+7. Swagger UI доступен по первому URL:
+
+   http://IP:PORT/swagger-ui/index.html
+
+### Состав манифестов
+
+| Файл | Что описывает |
+|---|---|
+| postgresdb-secret.yml | Логин/пароль Postgres (base64) |
+| postgresdb-configmap.yml | URL БД и имя базы |
+| postgresdb-deployment.yml | Deployment + Service для Postgres |
+| cd-auth-deployment.yml | Deployment + Service (LoadBalancer) для приложения |
+
+### Проверка самовосстановления и масштабирования
+
+    # Удалить pod — Kubernetes создаст новый автоматически
+    kubectl delete pod <имя-pod-а>
+
+    # Масштабировать приложение до 3 копий
+    kubectl scale deployment cd-auth --replicas=3
+
+    # Вернуть обратно
+    kubectl scale deployment cd-auth --replicas=1
+
+### Остановка
+
+    # Удалить ресурсы из кластера
+    kubectl delete -f k8s/
+
+    # Остановить кластер minikube
+    minikube stop
+
+    # Полностью удалить кластер
+    minikube delete

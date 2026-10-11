@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cd-auth
+  labels:
+    app: cd-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cd-auth
+  template:
+    metadata:
+      labels:
+        app: cd-auth
+    spec:
+      containers:
+        - name: cd-auth
+          image: cd-auth-auth:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 9900
+            - containerPort: 9901
+          env:
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: postgresdb-configmap
+                  key: database_url
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgresdb-secret
+                  key: postgres-username
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgresdb-secret
+                  key: postgres-password
+            - name: EUREKA_CLIENT_ENABLED
+              value: "false"
+            - name: EUREKA_CLIENT_REGISTER_WITH_EUREKA
+              value: "false"
+            - name: EUREKA_CLIENT_FETCH_REGISTRY
+              value: "false"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cd-auth-service
+spec:
+  selector:
+    app: cd-auth
+  type: LoadBalancer
+  ports:
+    - name: api
+      protocol: TCP
+      port: 9900
+      targetPort: 9900
+    - name: management
+      protocol: TCP
+      port: 9901
+      targetPort: 9901
