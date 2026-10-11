@@ -1,6 +1,8 @@
 services:
   db:
-    image: postgres:16
+    build:
+      context: ./db
+      dockerfile: Dockerfile
     container_name: cd-auth-db
     environment:
       - POSTGRES_DB=cd_auth
