@@ -20,4 +20,5 @@ target/
 .DS_Store
 Thumbs.db
 
+# Docker volumes
 db_data/
